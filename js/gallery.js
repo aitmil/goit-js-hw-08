@@ -72,15 +72,28 @@ gallery.addEventListener("click", handleModalOpen);
 function handleModalOpen(evt) {
   evt.preventDefault();
   if (evt.currentTarget === evt.target) return;
-  const imageSource = evt.target.dataset.source;
-  const currentImageSource = images.find(
-    ({ original }) => original === imageSource
-  ).original;
-  console.log(currentImageSource);
 
-  const instance = basicLightbox.create(`
-	<div class="modal"> <img class="modal-image" src="${currentImageSource}" alt="g" /> </div>
-`);
+  const imageSource = evt.target.dataset.source;
+  console.log(imageSource);
+
+  const instance = basicLightbox.create(
+    `<img class="modal-image" src="${imageSource}" />`,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", onKeyDown);
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", onKeyDown);
+      },
+    }
+  );
+  function onKeyDown(e) {
+    if (e.code === "Escape") {
+      instance.close();
+    }
+  }
+
+  instance.show();
 }
 
 function createMarkup(arr) {
@@ -94,7 +107,8 @@ function createMarkup(arr) {
             src="${preview}"
             data-source="${original}"
             alt="${description}"
-          /></a>
+          />
+        </a>
       </li>`
     )
     .join("");
