@@ -63,3 +63,39 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
+
+const gallery = document.querySelector(".gallery");
+gallery.innerHTML = createMarkup(images);
+
+gallery.addEventListener("click", handleModalOpen);
+
+function handleModalOpen(evt) {
+  evt.preventDefault();
+  if (evt.currentTarget === evt.target) return;
+  const imageSource = evt.target.dataset.source;
+  const currentImageSource = images.find(
+    ({ original }) => original === imageSource
+  ).original;
+  console.log(currentImageSource);
+
+  const instance = basicLightbox.create(`
+	<div class="modal"> <img class="modal-image" src="${currentImageSource}" alt="g" /> </div>
+`);
+}
+
+function createMarkup(arr) {
+  return arr
+    .map(
+      ({ preview, original, description }) => `
+      <li class="gallery-item">
+        <a class="gallery-link" href="${original}">
+          <img
+            class="gallery-image"
+            src="${preview}"
+            data-source="${original}"
+            alt="${description}"
+          /></a>
+      </li>`
+    )
+    .join("");
+}
