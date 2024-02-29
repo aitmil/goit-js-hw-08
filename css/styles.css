@@ -1,5 +1,9 @@
-.body {
+body {
   background-color: #fff;
+}
+
+img {
+  display: block;
 }
 
 .gallery {
@@ -23,9 +27,10 @@
   transform: scale(1.05);
 }
 
-.modal-image {
-  width: 1112px;
-  height: 640px;
+.basicLightbox {
+  background-color: rgba(46, 47, 66, 0.8);
 }
 
-/* $basicLightbox__background: rgba(46, 47, 66, 0.8); */
+.basicLightbox__placeholder > img:first-child:last-child {
+  width: 1128px;
+}
