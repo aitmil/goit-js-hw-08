@@ -33,4 +33,5 @@ img {
 
 .basicLightbox__placeholder > img:first-child:last-child {
   width: 1128px;
+  height: 640px;
 }
